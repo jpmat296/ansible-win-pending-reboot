@@ -1,0 +1,70 @@
+---
+name: CI
+
+on:  # yamllint disable-line rule:truthy
+  push:
+  pull_request:
+  schedule:
+    - cron: '20 5 * * 6'  # At 05:20 on Saturday
+
+env:
+  OBJC_DISABLE_INITIALIZE_FORK_SAFETY: 'YES'  # See ansible/ansible#49207
+  PY_COLORS: 1
+  ANSIBLE_FORCE_COLOR: 1
+
+jobs:
+
+  lint:
+    # nested virtualization is not possible for Ubuntu (issue actions/virtual-environments#183)
+    runs-on: macos-10.15
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install complementary brew packages
+        run: brew install pipenv
+
+      - name: Install Python Dependencies
+        run: pipenv sync
+
+      - name: Linters via molecule
+        run: |
+          pipenv run molecule lint
+          pipenv run molecule syntax
+
+  molecule:
+    # nested virtualization is not possible for Ubuntu (issue actions/virtual-environments#183)
+    runs-on: macos-10.15
+
+    strategy:
+      matrix:
+        windows_version:
+          - 2008R2
+          - 2012R2
+          - 2016
+          - 2019
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install complementary brew packages
+        run: brew install pipenv
+
+      - name: Install Dependencies
+        run: pipenv sync
+
+      - name: Create VM
+        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule create
+
+      - name: Converge
+        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule converge
+
+      - name: Check idempotence
+        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule idempotence
+
+      - name: Verify
+        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule verify
+
+      - name: Destroy VM
+        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule destroy
+        if: ${{ always() }}
