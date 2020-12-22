@@ -3,3 +3,22 @@
 - name: Upgrade Powershell & Windows Management Framework to 5.1
   import_role:
     name: jpmat296.upgrade_powershell
+- name: Install PendingReboot PowerShell module
+  win_psmodule:
+    name: PendingReboot
+- name: Execute command to test pending reboot
+  win_shell: Test-PendingReboot -Detailed
+  register: command
+  changed_when: false
+- name: Print errors if any
+  debug:
+    var: command.stderr_lines
+  when: win_pending_reboot_explain and command.stderr_lines | length > 0
+- name: Print explained information about pending reboot
+  debug:
+    var: command.stdout_lines
+  when: win_pending_reboot_explain
+- name: Reboot host if it has reboot pending
+  win_reboot:
+    msg: "Reboot triggered by ansible-win-pending-reboot"
+  when: "command.stdout is search(\"IsRebootPending\\s+: True\")"

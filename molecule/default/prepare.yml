@@ -2,3 +2,18 @@
 - name: Prepare
   hosts: all
   gather_facts: false
+  tasks:
+    - name: To prepare test, force upgrade of powershell now
+      import_role:
+        name: jpmat296.upgrade_powershell
+    - name: To force pending reboot, install Microsoft Edge
+      win_chocolatey: name=microsoft-edge
+    - name: Read Windows registry to assert pending reboot
+      win_shell: "Get-ItemProperty 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager' \
+        -Name PendingFileRenameOperations \
+        | Select-Object -ExpandProperty PendingFileRenameOperations"
+      register: command
+    - name: Assert pending reboot
+      assert:
+        that:
+          - "'C:\\\\Program Files (x86)\\\\Microsoft\\\\Edge' in command.stdout"

@@ -4,6 +4,10 @@
 - name: Verify
   hosts: all
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Execute Test-PendingReboot to assert no pending reboot
+      win_shell: Test-PendingReboot -Detailed
+      register: command
+    - name: Assert no pending reboot
+      assert:
+        that:
+         - "command.stdout is search(\"IsRebootPending\\s+: False\")"
