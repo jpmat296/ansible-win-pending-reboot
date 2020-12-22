@@ -1,0 +1,35 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: vagrant-win${WIN_VERSION:-2012R2}
+    box: jborean93/WindowsServer${WIN_VERSION:-2012R2}
+    memory: 2048
+    provider_raw_config_args:
+      # 2020-09-25: without this option, Windows reboots indefinitely on Windows 2018R2
+      - "customize ['modifyvm', :id, '--graphicscontroller', 'vboxsvga']"
+    instance_raw_config_args:
+      - "vm.boot_timeout = 1200"
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      vagrant-win${WIN_VERSION:-2012R2}:
+        ansible_user: vagrant
+        ansible_password: vagrant
+        ansible_port: 55986
+        ansible_host: 127.0.0.1
+        ansible_connection: winrm
+        ansible_winrm_transport: ntlm
+        ansible_winrm_scheme: https
+        ansible_winrm_server_cert_validation: ignore
+verifier:
+  name: ansible

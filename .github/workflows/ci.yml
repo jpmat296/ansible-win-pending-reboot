@@ -38,11 +38,19 @@ jobs:
 
     strategy:
       matrix:
+        scenario:
+          - has-pending-reboot
+          - no-pending-reboot
         windows_version:
           - 2008R2
           - 2012R2
           - 2016
           - 2019
+        exclude:
+          - scenario: no-pending-reboot
+            windows_version: 2008R2
+          - scenario: no-pending-reboot
+            windows_version: 2016
 
     steps:
       - uses: actions/checkout@v2
@@ -54,17 +62,22 @@ jobs:
         run: pipenv sync
 
       - name: Create VM
-        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule create
+        run: "WIN_VERSION=${{ matrix.windows_version }} \
+          pipenv run molecule create --scenario-name ${{ matrix.scenario }}"
 
       - name: Converge
-        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule converge
+        run: "WIN_VERSION=${{ matrix.windows_version }} \
+          pipenv run molecule converge --scenario-name ${{ matrix.scenario }}"
 
       - name: Check idempotence
-        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule idempotence
+        run: "WIN_VERSION=${{ matrix.windows_version }} \
+          pipenv run molecule idempotence --scenario-name ${{ matrix.scenario }}"
 
       - name: Verify
-        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule verify
+        run: "WIN_VERSION=${{ matrix.windows_version }} \
+          pipenv run molecule verify --scenario-name ${{ matrix.scenario }}"
 
       - name: Destroy VM
-        run: WIN_VERSION=${{ matrix.windows_version }} pipenv run molecule destroy
+        run: "WIN_VERSION=${{ matrix.windows_version }} \
+          pipenv run molecule destroy --scenario-name ${{ matrix.scenario }}"
         if: ${{ always() }}
