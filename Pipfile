@@ -11,7 +11,7 @@ python-vagrant = "*"
 ansible = "==2.10.*"
 pywinrm = "*"
 molecule-vagrant = "*"
-ansible-lint = "*"
+ansible-lint = {git = "https://github.com/ansible-community/ansible-lint.git"}
 
 [requires]
 python_version = "3.8"
