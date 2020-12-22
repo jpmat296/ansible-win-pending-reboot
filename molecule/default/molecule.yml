@@ -12,6 +12,7 @@ lint: |
 platforms:
   - name: vagrant-win${WIN_VERSION:-2012R2}
     box: jborean93/WindowsServer${WIN_VERSION:-2012R2}
+    memory: 2048
     provider_raw_config_args:
       # 2020-09-25: without this option, Windows reboots indefinitely on Windows 2018R2
       - "customize ['modifyvm', :id, '--graphicscontroller', 'vboxsvga']"
