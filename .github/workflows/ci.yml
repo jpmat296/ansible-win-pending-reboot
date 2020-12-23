@@ -21,6 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Use Python 3.8
+        run: brew install python@3.8
+
       - name: Install Python dependencies
         run: |
           pip3 install pipenv
@@ -54,6 +57,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Use Python 3.8
+        run: brew install python@3.8
 
       - name: Install Python dependencies
         run: |
