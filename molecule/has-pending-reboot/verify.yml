@@ -10,4 +10,4 @@
     - name: Assert no pending reboot
       assert:
         that:
-         - "command.stdout is search(\"IsRebootPending\\s+: False\")"
+          - "command.stdout is search(\"IsRebootPending\\s+: False\")"
