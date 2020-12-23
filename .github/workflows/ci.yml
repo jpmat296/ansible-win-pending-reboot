@@ -67,6 +67,10 @@ jobs:
           pipenv --rm || true
           pipenv sync
 
+      - name: Destroy VM
+        run: "WIN_VERSION=${{ matrix.windows_version }} \
+          pipenv run molecule destroy --scenario-name ${{ matrix.scenario }}"
+
       - name: Create VM
         run: "WIN_VERSION=${{ matrix.windows_version }} \
           pipenv run molecule create --scenario-name ${{ matrix.scenario }}"
