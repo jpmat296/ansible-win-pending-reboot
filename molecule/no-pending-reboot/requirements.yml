@@ -1,1 +1,3 @@
-../../meta/requirements.yml
+---
+roles:
+  - jpmat296.upgrade_powershell

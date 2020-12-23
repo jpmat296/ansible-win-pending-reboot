@@ -1,8 +1,5 @@
 ---
 # tasks file for ansible-win-pending-reboot
-- name: Upgrade Powershell & Windows Management Framework to 5.1
-  import_role:
-    name: jpmat296.upgrade_powershell
 - name: Install PendingReboot PowerShell module
   win_psmodule:
     name: PendingReboot

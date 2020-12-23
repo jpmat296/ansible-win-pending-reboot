@@ -1,7 +1,6 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: false
   tasks:
     - name: To prepare test, force upgrade of powershell now
       import_role:
