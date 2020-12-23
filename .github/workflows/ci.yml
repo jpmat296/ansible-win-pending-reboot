@@ -21,13 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install complementary brew packages
-        run: brew install pipenv
+      - name: Install Python dependencies
+        run: |
+          pip3 install pipenv
+          pipenv --rm || true
+          pipenv sync
 
-      - name: Install Python Dependencies
-        run: pipenv sync
-
-      - name: Linters via molecule
+      - name: Execute linters via molecule
         run: |
           pipenv run molecule lint
           pipenv run molecule syntax
@@ -55,11 +55,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install complementary brew packages
-        run: brew install pipenv
-
-      - name: Install Dependencies
-        run: pipenv sync
+      - name: Install Python dependencies
+        run: |
+          pip3 install pipenv
+          pipenv --rm || true
+          pipenv sync
 
       - name: Create VM
         run: "WIN_VERSION=${{ matrix.windows_version }} \
