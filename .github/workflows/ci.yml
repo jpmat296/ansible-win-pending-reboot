@@ -68,26 +68,32 @@ jobs:
           pipenv sync
 
       - name: Destroy VM
-        run: "WIN_VERSION=${{ matrix.windows_version }} \
-          pipenv run molecule destroy --scenario-name ${{ matrix.scenario }}"
+        run: >
+          WIN_VERSION=${{ matrix.windows_version }}
+          pipenv run molecule destroy --scenario-name ${{ matrix.scenario }}
 
       - name: Create VM
-        run: "WIN_VERSION=${{ matrix.windows_version }} \
-          pipenv run molecule create --scenario-name ${{ matrix.scenario }}"
+        run: >
+          WIN_VERSION=${{ matrix.windows_version }}
+          pipenv run molecule create --scenario-name ${{ matrix.scenario }}
 
       - name: Converge
-        run: "WIN_VERSION=${{ matrix.windows_version }} \
-          pipenv run molecule converge --scenario-name ${{ matrix.scenario }}"
+        run: >
+          WIN_VERSION=${{ matrix.windows_version }}
+          pipenv run molecule converge --scenario-name ${{ matrix.scenario }}
 
       - name: Check idempotence
-        run: "WIN_VERSION=${{ matrix.windows_version }} \
-          pipenv run molecule idempotence --scenario-name ${{ matrix.scenario }}"
+        run: >
+          WIN_VERSION=${{ matrix.windows_version }}
+          pipenv run molecule idempotence --scenario-name ${{ matrix.scenario }}
 
       - name: Verify
-        run: "WIN_VERSION=${{ matrix.windows_version }} \
-          pipenv run molecule verify --scenario-name ${{ matrix.scenario }}"
+        run: >
+          WIN_VERSION=${{ matrix.windows_version }}
+          pipenv run molecule verify --scenario-name ${{ matrix.scenario }}
 
       - name: Destroy VM
-        run: "WIN_VERSION=${{ matrix.windows_version }} \
-          pipenv run molecule destroy --scenario-name ${{ matrix.scenario }}"
+        run: >
+          WIN_VERSION=${{ matrix.windows_version }}
+          pipenv run molecule destroy --scenario-name ${{ matrix.scenario }}
         if: ${{ always() }}
