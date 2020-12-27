@@ -33,3 +33,21 @@ provisioner:
         ansible_winrm_server_cert_validation: ignore
 verifier:
   name: ansible
+scenario:
+  check_sequence:
+    - check
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - check
+    - cleanup
+    - destroy

@@ -92,6 +92,11 @@ jobs:
           WIN_VERSION=${{ matrix.windows_version }}
           pipenv run molecule verify --scenario-name ${{ matrix.scenario }}
 
+      - name: Check check mode
+        run: >
+          WIN_TAG=${{ matrix.win_tag }}
+          pipenv run molecule check --scenario-name ${{ matrix.scenario }}
+
       - name: Destroy VM
         run: >
           WIN_VERSION=${{ matrix.windows_version }}
