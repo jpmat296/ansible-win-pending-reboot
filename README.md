@@ -1,31 +1,58 @@
-Role Name
-=========
+Ansible role: jpmat296.win_pending_reboot
+=========================================
 
-A brief description of the role goes here.
+This role uses PowerShell module [PendingReboot](https://github.com/bcwilhite/PendingReboot) to
+reboot Windows host if it has pending reboot.
+
+Cause of pending reboot is by default explained by printing details given by `PendingReboot` module.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role takes care of `PendingReboot` installation thanks to `win_psmodule` module. The
+requirements of `win_psmodule` must be respected, including PowerShell upgrade to recent version.
+See documentation here:
+
+https://docs.ansible.com/ansible/latest/collections/community/windows/win_psmodule_module.html#id3
+
+The easiest way to respect requirements is to use my role
+[jpmat296.upgrade_powershell](https://github.com/jpmat296/ansible-upgrade-powershell). See
+[playbook example](#example-playbook) below.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```
+# Ansible execution log contains cause of pending reboot when 'true'
+win_pending_reboot_explain: true
+```
+
+Explanation example
+-------------------
+
+When variable `win_pending_reboot_explain` is set to `true` (default), the role writes
+the cause of pending reboot in Ansible log. Here is an example:
+
+![pending reboot ansible trace](https://user-images.githubusercontent.com/12024504/103155351-5d8fa800-479f-11eb-9da1-c724b4824484.png)
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No dependency. Use of role `jpmat296.upgrade_powershell` is optional.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Here is an example of pending reboot check preceded by upgrade of powershell. Both are idempotent. They will do nothing if powershell is already upgraded and no reboot is pending.
 
     - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+      tasks:
+        - name: Upgrade Powershell & Windows Management Framework to 5.1
+          import_role:
+            name: jpmat296.upgrade_powershell
+        - name: Reboot if reboot is pending
+          import_role:
+            name: jpmat296.win_pending_reboot
 
 License
 -------
@@ -35,4 +62,5 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+This role was created in last days of 2020 by
+[Jean-Pierre Matsumoto](https://fr.linkedin.com/in/jpmatsumoto).

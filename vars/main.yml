@@ -1,2 +1,2 @@
 ---
-# vars file for ansible-win-pending-reboot
+# vars file for win_pending_reboot

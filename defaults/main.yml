@@ -1,5 +1,5 @@
 ---
-# defaults file for ansible-win-pending-reboot
+# defaults file for win_pending_reboot
 
 # Ansible execution log contains cause of pending reboot when 'true'
 win_pending_reboot_explain: true

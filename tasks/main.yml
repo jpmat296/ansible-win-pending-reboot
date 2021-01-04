@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-win-pending-reboot
+# tasks file for win_pending_reboot
 - name: Install PendingReboot PowerShell module
   win_psmodule:
     name: PendingReboot
@@ -18,5 +18,5 @@
   when: win_pending_reboot_explain
 - name: Reboot host if it has reboot pending
   win_reboot:
-    msg: "Reboot triggered by ansible-win-pending-reboot"
+    msg: "Reboot triggered by Ansible role jpmat296.win_pending_reboot"
   when: "command.stdout is search(\"IsRebootPending\\s+: True\")"

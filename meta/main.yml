@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: win_pending_reboot
   author: Jean-Pierre Matsumoto
-  description: Reboot if reboot is pending. Root cause of pending reboot is explained.
+  description: Reboot Windows host if reboot is pending. Root cause of pending reboot is explained.
 
   license: BSD-3-Clause
 
@@ -18,7 +18,7 @@ galaxy_info:
         - 2019
 
   galaxy_tags:
-    - powershell
     - windows
+    - reboot
     - system
-    - todo
+    - powershell
