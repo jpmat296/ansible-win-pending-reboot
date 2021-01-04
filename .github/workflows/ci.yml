@@ -33,7 +33,7 @@ jobs:
 
       - name: Execute linters via molecule
         run: |
-          pipenv run molecule lint
+          ! pipenv run molecule lint
           pipenv run molecule syntax
 
   molecule:
