@@ -33,7 +33,7 @@ Explanation example
 When variable `win_pending_reboot_explain` is set to `true` (default), the role writes
 the cause of pending reboot in Ansible log. Here is an example:
 
-![pending reboot ansible trace](https://user-images.githubusercontent.com/12024504/103155351-5d8fa800-479f-11eb-9da1-c724b4824484.png)
+![pending reboot ansible trace](https://user-images.githubusercontent.com/12024504/103619695-7bdd6c80-4f32-11eb-831c-a5e6cd6aad66.png)
 
 Dependencies
 ------------
