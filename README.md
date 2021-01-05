@@ -1,6 +1,9 @@
 Ansible role: jpmat296.win_pending_reboot
 =========================================
 
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-jpmat296.win__pending__reboot-5bbdbf)](https://galaxy.ansible.com/jpmat296/win_pending_reboot)
+[![CI](https://github.com/jpmat296/ansible-win-pending-reboot/workflows/CI/badge.svg?event=push)](https://github.com/jpmat296/ansible-win-pending-reboot/actions?query=workflow%3ACI)
+
 This role uses PowerShell module [PendingReboot](https://github.com/bcwilhite/PendingReboot) to
 reboot Windows host if it has pending reboot.
 
