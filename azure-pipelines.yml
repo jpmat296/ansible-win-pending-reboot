@@ -10,6 +10,11 @@ trigger:
 pool:
   vmImage: 'macOS-latest'
 
+variables:
+  OBJC_DISABLE_INITIALIZE_FORK_SAFETY: 'YES'  # See ansible/ansible#49207
+  PY_COLORS: 1
+  ANSIBLE_FORCE_COLOR: 1
+
 steps:
   - script: echo Hello, world!
     displayName: 'Run a one-line script'
