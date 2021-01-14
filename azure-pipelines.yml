@@ -18,4 +18,13 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
+# Already installed
 - script: brew install virtualbox
+
+- script: brew install vagrant
+
+- script: brew install pipenv
+
+- script: pipenv sync
+
+- script: pipenv run mol test
